@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/task");
+    if (isAuthenticated) navigate("/product");
   }, [isAuthenticated]);
 
   const onSubmit = handleSubmit(async (values) => {

@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useProduct } from "../hooks/useProduct";
+import { Box, Typography, Button } from "@mui/material";
+import CardItems from "../components/CardItems";
+import { useAuth } from "../hooks/useAuth";
 
 const HomePage = () => {
-  return (
-    <div>HomePage</div>
-  )
-}
+  const { getAllProducts, allProducts } = useProduct();
 
-export default HomePage
+  const { logout } = useAuth();
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
+  return (
+    <Box>
+      <CardItems />
+      <Button onClick={logout}>logout</Button>
+    </Box>
+  );
+};
+
+export default HomePage;

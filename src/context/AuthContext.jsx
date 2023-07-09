@@ -4,6 +4,7 @@ import {
   loginRequest,
   verifyTokenRequest,
   logoutRequest,
+  profileRequest,
 } from "../api/auth";
 import Cookies from "js-cookie";
 
@@ -11,6 +12,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +20,6 @@ export const AuthProvider = ({ children }) => {
   const signup = async (user) => {
     try {
       const res = await registerRequest(user);
-      console.log(res.data);
       setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
@@ -30,7 +31,11 @@ export const AuthProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
-      console.log(res);
+      if (res.data.username.includes("admin")) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
       setIsAuthenticated(true);
       setUser(res.data);
     } catch (error) {
@@ -45,6 +50,16 @@ export const AuthProvider = ({ children }) => {
     try {
       await logoutRequest();
       setIsAuthenticated(false);
+      setIsAdmin(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getProfile = async (user) => {
+    try {
+      const res = await profileRequest(user);
+      console.log(res);
     } catch (error) {
       console.error(error);
     }
@@ -66,22 +81,27 @@ export const AuthProvider = ({ children }) => {
       if (!cookies.token) {
         setIsAuthenticated(false);
         setLoading(false);
+        setIsAdmin(false);
         return setUser(null);
       }
       try {
         const res = await verifyTokenRequest(cookies.token);
+        console.log(res.data.username.includes("admin"));
         if (!res.data) {
           setIsAuthenticated(false);
           setLoading(false);
-
+          setIsAdmin(false);
           return;
         }
-
+        if (res.data.username.includes("admin")) {
+          setIsAdmin(true);
+        }
         setIsAuthenticated(true);
         setUser(res.data);
         setLoading(false);
       } catch (error) {
         setIsAuthenticated(false);
+        setIsAdmin(false);
         setUser(null);
         setLoading(false);
       }
@@ -95,10 +115,12 @@ export const AuthProvider = ({ children }) => {
         signup,
         signin,
         logout,
+        getProfile,
         loading,
         user,
         isAuthenticated,
         errors,
+        isAdmin,
       }}>
       {children}
     </AuthContext.Provider>

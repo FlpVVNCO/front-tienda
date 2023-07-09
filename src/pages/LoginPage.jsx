@@ -19,13 +19,18 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
-  const { signin, errors: loginErrors, isAuthenticated } = useAuth();
+  const { signin, errors: loginErrors, isAuthenticated, isAdmin } = useAuth();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/task");
+    if (isAuthenticated) navigate("/");
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (isAdmin) navigate("/product");
+  }, [isAdmin]);
+  
 
   const onSubmit = handleSubmit((data) => {
     signin(data);

@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import { Box, Card, Typography, Button } from "@mui/material";
 import { useTasks } from "../hooks/useTasks";
 import { Link } from "react-router-dom";
+import { useProduct } from "../hooks/useProduct";
 
 const CardProduct = () => {
   const { getTasks, tasks, deleteTask } = useTasks();
+  const { product } = useProduct();
 
   useEffect(() => {
     getTasks();
