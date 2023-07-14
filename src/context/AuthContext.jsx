@@ -86,7 +86,6 @@ export const AuthProvider = ({ children }) => {
       }
       try {
         const res = await verifyTokenRequest(cookies.token);
-        console.log(res.data.username.includes("admin"));
         if (!res.data) {
           setIsAuthenticated(false);
           setLoading(false);

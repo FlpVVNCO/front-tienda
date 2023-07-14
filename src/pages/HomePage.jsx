@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useProduct } from "../hooks/useProduct";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Grid, Toolbar } from "@mui/material";
 import CardItems from "../components/CardItems";
-import { useAuth } from "../hooks/useAuth";
 
 const HomePage = () => {
-  const { getAllProducts, allProducts } = useProduct();
-
-  const { logout } = useAuth();
+  const { getAllProducts } = useProduct();
 
   useEffect(() => {
     getAllProducts();
   }, []);
 
   return (
-    <Box>
-      <CardItems />
-      <Button onClick={logout}>logout</Button>
-    </Box>
+    <Grid container sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
+      <Toolbar />
+      <Grid item xs={12}>
+        <Box sx={{ background: "pink", height: 300 }}></Box>
+        <Toolbar />
+      </Grid>
+      <Grid item xs={12}>
+        <CardItems />
+      </Grid>
+    </Grid>
   );
 };
 

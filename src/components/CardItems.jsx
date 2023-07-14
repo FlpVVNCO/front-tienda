@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 const CardItems = () => {
-  const { allProducts, deleteProduct } = useProduct();
+  const { allProducts, deleteProduct, getProduct, addCart } = useProduct();
   const { user, isAdmin } = useAuth();
 
   return (
@@ -29,7 +29,14 @@ const CardItems = () => {
                 Delete
               </Button>
             </Box>
-          ) : null}
+          ) : (
+            <Button
+              onClick={() => {
+                addCart(product);
+              }}>
+              Agregar Carrito
+            </Button>
+          )}
         </Box>
       ))}
     </Box>

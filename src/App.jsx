@@ -12,6 +12,8 @@ import { TasksProvider } from "./context/TasksContext";
 import ProductPage from "./pages/ProductPage";
 import { ProductsProvider } from "./context/ProductContext";
 import ProductFormPage from "./pages/ProductFormPage";
+import Navbar from "./components/Navbar";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
       <TasksProvider>
         <ProductsProvider>
           <BrowserRouter>
+            <Navbar />
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
@@ -31,6 +34,7 @@ function App() {
               </Route>
               <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
             </Routes>

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import {
   createProductRequest,
   deleteProductRequest,
@@ -7,12 +7,19 @@ import {
   getProductsRequest,
   updateProductRequest,
 } from "../api/product";
+import CartItems from "../components/CartItems";
 
 export const ProductsContext = createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
+  const [cart, setCart] = useState(
+    localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
+      : []
+  );
+  const [anchorEl, setAnchorEL] = useState(null);
 
   const getProducts = async () => {
     const res = await getProductsRequest();
@@ -21,7 +28,6 @@ export const ProductsProvider = ({ children }) => {
 
   const getAllProducts = async () => {
     const res = await getAllProductsRequest();
-    console.log(res.data);
     setAllProducts(res.data);
   };
 
@@ -38,7 +44,7 @@ export const ProductsProvider = ({ children }) => {
     try {
       const res = await deleteProductRequest(id);
       if (res.status === 204)
-        setProducts(products.filter((product) => product._id !== id));
+        setAllProducts(allProducts.filter((product) => product._id !== id));
     } catch (error) {
       console.error(error);
     }
@@ -61,6 +67,45 @@ export const ProductsProvider = ({ children }) => {
     }
   };
 
+  const addCart = (product) => {
+    const existingItem = cart.find((item) => item._id === product._id);
+
+    if (existingItem) {
+      const updatedItems = cart.map((item) => {
+        if (item._id === product._id) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      });
+      setCart(updatedItems);
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+  };
+
+  const removeFromCart = (product) => {
+    const existingItem = cart.find((item) => item._id === product._id);
+
+    if (existingItem) {
+      if (existingItem.quantity === 1) {
+        const updatedItems = cart.filter((item) => item._id !== product._id);
+        setCart(updatedItems);
+      } else {
+        const updatedItems = cart.map((item) => {
+          if (item._id === product._id) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
+          return item;
+        });
+        setCart(updatedItems);
+      }
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cart) ?? []);
+  }, [cart]);
+
   return (
     <ProductsContext.Provider
       value={{
@@ -70,8 +115,13 @@ export const ProductsProvider = ({ children }) => {
         getProduct,
         updateProduct,
         getAllProducts,
+        removeFromCart,
+        addCart,
+        setAnchorEL,
+        anchorEl,
         products,
         allProducts,
+        cart,
       }}>
       {children}
     </ProductsContext.Provider>
