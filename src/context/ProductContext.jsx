@@ -7,7 +7,7 @@ import {
   getProductsRequest,
   updateProductRequest,
 } from "../api/product";
-import CartItems from "../components/CartItems";
+import { createImageRequest, getImageRequest } from "../api/image";
 
 export const ProductsContext = createContext();
 
@@ -19,7 +19,9 @@ export const ProductsProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("cartItems"))
       : []
   );
-  const [anchorEl, setAnchorEL] = useState(null);
+  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const getProducts = async () => {
     const res = await getProductsRequest();
@@ -73,13 +75,17 @@ export const ProductsProvider = ({ children }) => {
     if (existingItem) {
       const updatedItems = cart.map((item) => {
         if (item._id === product._id) {
-          return { ...item, quantity: item.quantity + 1 };
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+            total: (product.quantity + 1) * product.price,
+          };
         }
         return item;
       });
       setCart(updatedItems);
     } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      setCart([...cart, { ...product, quantity: 1, total: product.price }]);
     }
   };
 
@@ -93,7 +99,11 @@ export const ProductsProvider = ({ children }) => {
       } else {
         const updatedItems = cart.map((item) => {
           if (item._id === product._id) {
-            return { ...item, quantity: item.quantity - 1 };
+            return {
+              ...item,
+              quantity: item.quantity - 1,
+              total: (product.quantity - 1) * product.price,
+            };
           }
           return item;
         });
@@ -102,9 +112,38 @@ export const ProductsProvider = ({ children }) => {
     }
   };
 
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const createImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      const res = await createImageRequest(formData);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getImages = async () => {
+    try {
+      const res = await getImageRequest();
+      console.log(res);
+      setImages(res.data.images);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cart) ?? []);
   }, [cart]);
+
+  useEffect(() => {
+    getImages();
+  }, []);
 
   return (
     <ProductsContext.Provider
@@ -117,12 +156,16 @@ export const ProductsProvider = ({ children }) => {
         getAllProducts,
         removeFromCart,
         addCart,
-        setAnchorEL,
-        anchorEl,
+        setOpen,
+        handleFileChange,
+        createImage,
+        open,
         products,
         allProducts,
         cart,
-      }}>
+        images,
+      }}
+    >
       {children}
     </ProductsContext.Provider>
   );

@@ -3,8 +3,6 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
-import TaskPage from "./pages/TaskPage";
-import TaskFormPage from "./pages/TaskFormPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./ProtectedRoute";
 import ProtectedAdminRoute from "./ProtectedAdminRoute";
