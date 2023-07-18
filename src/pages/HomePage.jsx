@@ -10,14 +10,25 @@ const HomePage = () => {
     getAllProducts();
   }, []);
 
+  const imageUrl = `https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg`;
+
   return (
-    <Grid container sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
-      <Toolbar />
+    <Grid container>
       <Grid item xs={12}>
-        <Box sx={{ background: "pink", height: 300 }}></Box>
+        <Box
+          sx={{
+            backgroundImage: `url(${imageUrl})`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            height: "600px",
+            width: "100%",
+          }}>
+          x
+        </Box>
         <Toolbar />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
         <CardItems />
       </Grid>
     </Grid>

@@ -15,13 +15,14 @@ import {
 const CartItems = () => {
   const { cart, removeFromCart, addCart } = useProduct();
 
-  let productTotal = cart.map((product) => product.total);
-
-  let cartTotal = 0;
-
-  for (const i of productTotal) cartTotal += i;
+  let cartTotal = cart.reduce(
+    (acumulador, actual) => acumulador + actual.total,
+    0
+  );
 
   console.log(cartTotal);
+
+  console.log(cart);
 
   return (
     <List>
