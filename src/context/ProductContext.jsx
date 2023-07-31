@@ -8,11 +8,10 @@ import {
   updateProductRequest,
 } from "../api/product";
 import { createImageRequest, getImageRequest } from "../api/image";
-
 export const ProductsContext = createContext();
 
 export const ProductsProvider = ({ children }) => {
-  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [cart, setCart] = useState(
     localStorage.getItem("cartItems")
@@ -22,20 +21,41 @@ export const ProductsProvider = ({ children }) => {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
   const [open, setOpen] = useState(false);
+  const [transitionName, setTransitionName] = useState("");
+  const [imageSelected, setImageSelected] = useState("");
 
-  const getProducts = async () => {
-    const res = await getProductsRequest();
-    setProducts(res.data);
-  };
+  // const getProducts = async () => {
+  //   const res = await getProductsRequest();
+  //   setProducts(res.data);
+  // };
 
   const getAllProducts = async () => {
     const res = await getAllProductsRequest();
     setAllProducts(res.data);
   };
 
-  const createProduct = async (product) => {
+  const createProduct = async (data) => {
     try {
-      const res = await createProductRequest(product);
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("price", data.price); // Convertir a número
+      formData.append("amount", data.amount);
+      formData.append("image", image);
+
+      const res = await createProductRequest(formData);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const createImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      console.log(formData);
+      const res = await createImageRequest(formData);
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -55,6 +75,8 @@ export const ProductsProvider = ({ children }) => {
   const getProduct = async (id) => {
     try {
       const res = await getProductRequest(id);
+      console.log(res.data);
+      setProduct(res.data);
       return res.data;
     } catch (error) {
       console.error(error);
@@ -116,21 +138,9 @@ export const ProductsProvider = ({ children }) => {
     setImage(e.target.files[0]);
   };
 
-  const createImage = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("image", image);
-      const res = await createImageRequest(formData);
-      console.log(res);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const getImages = async () => {
     try {
       const res = await getImageRequest();
-      console.log(res);
       setImages(res.data.images);
     } catch (error) {
       console.error(error);
@@ -150,7 +160,6 @@ export const ProductsProvider = ({ children }) => {
       value={{
         createProduct,
         deleteProduct,
-        getProducts,
         getProduct,
         updateProduct,
         getAllProducts,
@@ -159,13 +168,17 @@ export const ProductsProvider = ({ children }) => {
         setOpen,
         handleFileChange,
         createImage,
+        setTransitionName,
+        setImageSelected,
         open,
-        products,
+        product,
         allProducts,
         cart,
         images,
-      }}
-    >
+        image,
+        transitionName,
+        imageSelected,
+      }}>
       {children}
     </ProductsContext.Provider>
   );

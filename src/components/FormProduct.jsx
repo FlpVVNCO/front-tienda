@@ -5,11 +5,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 
 const FormProduct = () => {
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, getValues } = useForm();
   const navigate = useNavigate();
   const params = useParams();
 
-  const { createProduct, updateProduct, getProduct } = useProduct();
+  const { createProduct, updateProduct, getProduct, handleFileChange } =
+    useProduct();
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -46,6 +47,7 @@ const FormProduct = () => {
         <TextField
           sx={{ mt: 2 }}
           type="text"
+          name="name"
           placeholder="name"
           autoFocus
           size="small"
@@ -55,6 +57,7 @@ const FormProduct = () => {
         <TextField
           sx={{ mt: 2 }}
           type="number"
+          name="price"
           placeholder="price"
           autoFocus
           size="small"
@@ -66,6 +69,7 @@ const FormProduct = () => {
         <TextField
           sx={{ mt: 2 }}
           type="number"
+          name="amount"
           placeholder="amount"
           autoFocus
           size="small"
@@ -77,12 +81,21 @@ const FormProduct = () => {
         <TextField
           sx={{ mt: 2 }}
           size="small"
+          name="description"
           multiline
           rows={10}
           fullWidth
           placeholder="description"
           {...register("description")}
         />
+
+        <input
+          type="file"
+          name="image"
+          {...register("image", { required: true })}
+          onChange={handleFileChange}
+        />
+
         <Button sx={{ mt: 2 }} variant="contained" fullWidth type="submit">
           Save
         </Button>

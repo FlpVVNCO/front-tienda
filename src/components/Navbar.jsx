@@ -6,13 +6,9 @@ import {
   Typography,
   Button,
   Icon,
-  Input,
   TextField,
   InputAdornment,
   Autocomplete,
-  ListItem,
-  ListItemButton,
-  List,
   Stack,
 } from "@mui/material";
 import {
@@ -25,22 +21,27 @@ import { useAuth } from "../hooks/useAuth";
 import { Link } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
 import DrawerCart from "./DrawerCart";
+import ScrollHide from "./utilities/ScrollHide";
 
 const Navbar = () => {
   const { isAuthenticated, isAdmin, logout } = useAuth();
 
-  const { cart, setOpen } = useProduct();
+  const { cart, setOpen, allProducts } = useProduct();
 
   const handleClick = () => {
     setOpen(true);
   };
 
+  const searchProduct = allProducts.map((product) => product.name);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <DrawerCart />
+      {/* <ScrollHide threshold={400}> */}
       <AppBar
         position="static"
-        sx={{ bgcolor: "white", color: "black", px: 15, mt: 1 }}>
+        elevation={0}
+        sx={{ bgcolor: "white", color: "black", px: 15 }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -70,7 +71,7 @@ const Navbar = () => {
               freeSolo
               disableClearable
               sx={{ width: "500px" }}
-              options={["hola", "chao"]}
+              options={searchProduct}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -111,16 +112,29 @@ const Navbar = () => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Stack direction="row">
-              <Button color="inherit">HOME</Button>
-              <Button color="inherit">HOME</Button>
-              <Button color="inherit">HOME</Button>
-              <Button color="inherit">HOME</Button>
-              <Button color="inherit">HOME</Button>
-              <Button color="inherit">HOME</Button>
+              <Button color="inherit" sx={{ fontSize: 13 }}>
+                Home
+              </Button>
+              <Button color="inherit" sx={{ fontSize: 13 }}>
+                Catálogo general
+              </Button>
+              <Button color="inherit" sx={{ fontSize: 13 }}>
+                Ofertas Relampago
+              </Button>
+              <Button color="inherit" sx={{ fontSize: 13 }}>
+                Vestuario Hombre
+              </Button>
+              <Button color="inherit" sx={{ fontSize: 13 }}>
+                Vestuario Mujer
+              </Button>
+              <Button color="inherit" sx={{ fontSize: 13 }}>
+                Profile
+              </Button>
             </Stack>
           </Box>
         </Toolbar>
       </AppBar>
+      {/* </ScrollHide> */}
     </Box>
   );
 };

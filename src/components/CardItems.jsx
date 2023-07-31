@@ -1,8 +1,16 @@
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  ImageList,
+  ImageListItem,
+  Rating,
+} from "@mui/material";
 import { useProduct } from "../hooks/useProduct";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import Product from "./Product";
 
 const CardItems = () => {
   const { allProducts, deleteProduct, getProduct, addCart, setOpen } =
@@ -11,37 +19,7 @@ const CardItems = () => {
 
   return (
     <Box sx={{ display: "flex", flexFlow: "row wrap" }}>
-      {allProducts.map((product) => (
-        <Box sx={{ border: "1px solid #000", mr: 2, p: 2 }} key={product._id}>
-          <Typography>{product.name}</Typography>
-          <Typography>{product.description}</Typography>
-          <Typography>${product.price}</Typography>
-          <Typography>{product.amount}</Typography>
-          <Typography>{new Date(product.date).toLocaleDateString()}</Typography>
-          {isAdmin ? (
-            <Box>
-              <Button component={Link} to={`/product/${product._id}`}>
-                Update
-              </Button>
-              <Button
-                onClick={() => {
-                  deleteProduct(product._id);
-                }}
-              >
-                Delete
-              </Button>
-            </Box>
-          ) : (
-            <Button
-              onClick={() => {
-                addCart(product), setOpen(true);
-              }}
-            >
-              Agregar Carrito
-            </Button>
-          )}
-        </Box>
-      ))}
+      <Product />
     </Box>
   );
 };

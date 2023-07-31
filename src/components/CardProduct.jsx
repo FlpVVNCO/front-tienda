@@ -1,57 +1,49 @@
-import { useEffect } from "react";
-import { Box, Card, Typography, Button } from "@mui/material";
-import { useTasks } from "../hooks/useTasks";
-import { Link } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
+import { Box, Typography, Button, Rating } from "@mui/material";
 
 const CardProduct = () => {
-  const { getTasks, tasks, deleteTask } = useTasks();
-  const { product } = useProduct();
-
-  useEffect(() => {
-    getTasks();
-  }, []);
-
-  if (tasks.length === 0) return <h1>No task</h1>;
+  const { product, transitionName, addCart, setOpen } = useProduct();
 
   return (
-    <Box>
-      {tasks.map((task) => (
-        <Box key={task._id}>
-          <br></br>
-          <Card elevation={3} sx={{ textAlign: "center" }}>
-            <Box
-              component="header"
-              sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography fontWeight="bold"> {task.title}</Typography>
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <Button
-                  component={Link}
-                  to={`/task/${task._id}`}
-                  size="small"
-                  variant="contained">
-                  Update
-                </Button>
-                <Button
-                  onClick={() => {
-                    deleteTask(task._id);
-                  }}
-                  size="small"
-                  variant="contained">
-                  Delete
-                </Button>
-              </Box>
-            </Box>
-
-            <Typography variant="h3" fontSize={16}>
-              {task.description}
-            </Typography>
-            <Typography variant="h3" fontSize={16}>
-              {new Date(task.date).toLocaleDateString()}
-            </Typography>
-          </Card>
-        </Box>
-      ))}
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <img
+        src={`http://localhost:4000/api/${product.imageUrl}`}
+        alt={`Producto ${product.name}`}
+        style={{ viewTransitionName: transitionName }}
+      />
+      <Box sx={{ display: "flex", flexFlow: "column wrap" }}>
+        <Typography variant="h1" fontSize={32} fontWeight={700} lineHeight={2}>
+          {product.name}
+        </Typography>
+        <Rating defaultValue={4.5} precision={0.5} size="small" />
+        <Typography fontSize={28} fontWeight={500} color="red" lineHeight={2}>
+          ${product.price}
+        </Typography>
+        <Typography>
+          Talla: <Typography>S, M, L, XL</Typography>
+        </Typography>
+        <Typography color="#14a741" fontSize={14} mt={2}>
+          disponible:{" "}
+          <Typography color="#000" fontSize={14}>
+            {product.amount} unidades
+          </Typography>
+        </Typography>
+        <Button
+          onClick={() => {
+            addCart(product), setOpen(true);
+          }}
+          variant="contained"
+          sx={{
+            p: 2,
+            background: "red",
+            "&:hover": {
+              background: "red",
+            },
+            mt: 2,
+          }}>
+          Agregar al carro
+        </Button>
+      </Box>
     </Box>
   );
 };

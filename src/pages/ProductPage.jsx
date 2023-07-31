@@ -6,8 +6,7 @@ import CardItems from "../components/CardItems";
 import { Link } from "react-router-dom";
 
 const ProductPage = () => {
-  const { getAllProducts, createImage, handleFileChange, images } =
-    useProduct();
+  const { getAllProducts } = useProduct();
   const { register, handleSubmit } = useForm();
 
   useEffect(() => {
@@ -20,7 +19,7 @@ const ProductPage = () => {
       <Button component={Link} to="/add-product">
         AÑADIR UN PRODUCTO
       </Button>
-      <form onSubmit={handleSubmit(createImage)}>
+      {/* <form onSubmit={handleSubmit(createImage)}>
         <input type="file" {...register("image")} onChange={handleFileChange} />
         <button type="submit">Subir</button>
       </form>
@@ -34,7 +33,7 @@ const ProductPage = () => {
             <p>{image.name}</p>
           </div>
         ))}
-      </div>
+      </div> */}
     </Box>
   );
 };
