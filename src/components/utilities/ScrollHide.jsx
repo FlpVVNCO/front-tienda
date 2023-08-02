@@ -1,5 +1,5 @@
 import React from "react";
-import { useScrollTrigger, Slide } from "@mui/material";
+import { useScrollTrigger, Slide, easing } from "@mui/material";
 
 const ScrollHide = (props) => {
   const trigger = useScrollTrigger({
@@ -9,7 +9,11 @@ const ScrollHide = (props) => {
   });
 
   return (
-    <Slide appear={true} direction="down" in={!trigger}>
+    <Slide
+      appear={true}
+      direction="down"
+      easing={{ enter: "cubic-bezier(0, 1.5, .8, 1)", exit: "null" }}
+      in={trigger}>
       {props.children}
     </Slide>
   );

@@ -4,16 +4,16 @@ import { Toolbar, Box, Typography, Button, Grid, Divider } from "@mui/material";
 import { useParams } from "react-router-dom";
 import CardProduct from "../components/CardProduct";
 import Footer from "../components/Footer";
+import DescriptionProduct from "../components/DescriptionProduct";
 
 const ProductViewPage = () => {
   const { transitionName, product, getProduct } = useProduct();
-
-  console.log(product);
 
   const params = useParams();
 
   useEffect(() => {
     getProduct(params.id);
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -23,15 +23,14 @@ const ProductViewPage = () => {
         <CardProduct />
       </Grid>
       <Grid item xs={12} sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
+        <Toolbar />
         <Divider />
-        <Box>
-          <Typography fontWeight="bold">Description</Typography>
-          <Typography>{product.description}</Typography>
-        </Box>
+        <DescriptionProduct />
       </Grid>
-      {/* <Grid item xs={12}>
-        <Footer />
-      </Grid> */}
+      <Grid item xs={12}>
+        <Toolbar />
+        {/* <Footer /> */}
+      </Grid>
     </Grid>
   );
 };
