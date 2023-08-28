@@ -32,25 +32,25 @@ const HomePage = () => {
         </Box>
         <Toolbar />
       </Grid>
-      <Grid item xs={12} sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
+      <Grid item xs={12} sx={{ px: { xs: 0, sm: 5, xl: 20 } }}>
         <CardInfo />
       </Grid>
       <Toolbar />
-      <Grid item xs={12} sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
+      <Grid item xs={12} sx={{ px: { xs: 0, sm: 5, xl: 20 } }}>
         <Typography variant="h1" fontSize={26} mb={2}>
           Más vendidos:
         </Typography>
         <CarouselProduct />
       </Grid>
       <Toolbar />
-      <Grid item xs={12} sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
+      <Grid item xs={12} sx={{ px: { xs: 0, sm: 5, xl: 20 } }}>
         <Typography variant="h1" fontSize={26} mb={2}>
           Categorias:
         </Typography>
         <CardCategories />
       </Grid>
       <Toolbar />
-      <Grid item xs={12} sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
+      <Grid item xs={12} sx={{ px: { xs: 0, sm: 5, xl: 20 } }}>
         <Typography variant="h1" fontSize={26} mb={2}>
           Productos:
         </Typography>

@@ -153,6 +153,7 @@ export const ProductsProvider = ({ children }) => {
 
   useEffect(() => {
     getImages();
+    getAllProducts();
   }, []);
 
   return (

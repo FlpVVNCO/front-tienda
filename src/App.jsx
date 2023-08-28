@@ -7,7 +7,6 @@ import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./ProtectedRoute";
 import ProtectedAdminRoute from "./ProtectedAdminRoute";
 import { TasksProvider } from "./context/TasksContext";
-import ProductPage from "./pages/ProductPage";
 import { ProductsProvider } from "./context/ProductContext";
 import ProductFormPage from "./pages/ProductFormPage";
 import Navbar from "./components/Navbar";
@@ -17,6 +16,8 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import AddProductPage from "./pages/AddProductPage";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   return (
@@ -30,13 +31,14 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
 
               <Route element={<ProtectedAdminRoute />}>
-                <Route path="/product" element={<ProductPage />} />
+                <Route path="/product" element={<AddProductPage />} />
                 <Route path="/add-product" element={<ProductFormPage />} />
                 <Route path="/product/:id" element={<ProductFormPage />} />
                 <Route path="/admin/profile" element={<ProfilePage />} />
               </Route>
               <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/productos" element={<ProductPage />} />
                 <Route path="/productos/:id" element={<ProductViewPage />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<ProfilePage />} />

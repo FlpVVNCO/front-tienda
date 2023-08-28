@@ -7,11 +7,14 @@ const CardProduct = () => {
   return (
     <Box
       sx={{ display: "flex", flexFlow: "row wrap", justifyContent: "center" }}>
-      <img
-        src={`http://localhost:4000/api/${product.imageUrl}`}
-        alt={`Producto ${product.name}`}
-        style={{ viewTransitionName: transitionName }}
-      />
+      <Box>
+        <img
+          src={`http://localhost:4000/api/${product.imageUrl}`}
+          alt={`Producto ${product.name}`}
+          style={{ viewTransitionName: transitionName }}
+        />
+      </Box>
+
       <Box sx={{ display: "flex", flexFlow: "column wrap" }}>
         <Typography
           variant="h1"
@@ -29,7 +32,6 @@ const CardProduct = () => {
         </Typography>
 
         <Typography>Talla:</Typography>
-
         <Box sx={{ display: "flex", flexFlow: "row wrap", gap: 1 }}>
           <Button
             sx={{

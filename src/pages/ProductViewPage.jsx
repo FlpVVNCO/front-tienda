@@ -18,18 +18,18 @@ const ProductViewPage = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12} sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
+      <Grid item xs={12} sx={{ px: { xs: 0, sm: 5, xl: 20 } }}>
         <Toolbar />
         <CardProduct />
       </Grid>
-      <Grid item xs={12} sx={{ px: { xs: 0, sm: 0, xl: 20 } }}>
+      <Grid item xs={12} sx={{ px: { xs: 0, sm: 5, xl: 20 } }}>
         <Toolbar />
         <Divider />
         <DescriptionProduct />
       </Grid>
       <Grid item xs={12}>
         <Toolbar />
-        {/* <Footer /> */}
+        <Footer />
       </Grid>
     </Grid>
   );
