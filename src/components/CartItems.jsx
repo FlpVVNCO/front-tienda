@@ -20,10 +20,6 @@ const CartItems = () => {
     0
   );
 
-  console.log(cartTotal);
-
-  console.log(cart);
-
   return (
     <List>
       {cart.map((product) => (

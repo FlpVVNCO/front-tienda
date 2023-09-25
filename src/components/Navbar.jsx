@@ -1,28 +1,37 @@
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-  Button,
-  Icon,
-  TextField,
-  InputAdornment,
-  Autocomplete,
-  Stack,
-} from "@mui/material";
-import {
-  BsMenuApp,
-  BsFillCartFill,
-  BsCartPlus,
-  BsSearch,
-} from "react-icons/bs";
-import { useAuth } from "../hooks/useAuth";
-import { Link } from "react-router-dom";
-import { useProduct } from "../hooks/useProduct";
+import { AppBar, Box, Toolbar, Typography, Button, Stack } from "@mui/material";
 import DrawerCart from "./DrawerCart";
 import ScrollHide from "./utilities/ScrollHide";
 import SearchBar from "./SearchBar";
+import { Link } from "react-router-dom";
+
+const categories = [
+  {
+    id: 1,
+    categoría: "Home",
+    path: "/",
+  },
+  {
+    id: 2,
+    categoria: "Catálogo general",
+    path: "/productos",
+  },
+  {
+    id: 3,
+    categoria: "Ofertas Relampago",
+    path: "/productos",
+  },
+
+  {
+    id: 4,
+    categoria: "Vestuario Hombre",
+    path: "/productos",
+  },
+  {
+    id: 5,
+    categoria: "Vestuario Mujer",
+    path: "/productos",
+  },
+];
 
 const Navbar = () => {
   return (
@@ -32,33 +41,27 @@ const Navbar = () => {
       <AppBar
         position="static"
         elevation={0}
-        sx={{ bgcolor: "white", color: "black", px: 15 }}>
+        sx={{ bgcolor: "white", color: "black", px: { xs: 0, sm: 5, xl: 20 } }}
+      >
         <SearchBar />
         {/* Categories */}
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography>Categories</Typography>
+            <Typography>Categorias</Typography>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Stack direction="row">
-              <Button color="inherit" sx={{ fontSize: 13 }}>
-                Home
-              </Button>
-              <Button color="inherit" sx={{ fontSize: 13 }}>
-                Catálogo general
-              </Button>
-              <Button color="inherit" sx={{ fontSize: 13 }}>
-                Ofertas Relampago
-              </Button>
-              <Button color="inherit" sx={{ fontSize: 13 }}>
-                Vestuario Hombre
-              </Button>
-              <Button color="inherit" sx={{ fontSize: 13 }}>
-                Vestuario Mujer
-              </Button>
-              <Button color="inherit" sx={{ fontSize: 13 }}>
-                Profile
-              </Button>
+              {categories.map((category) => (
+                <Button key={category.id}>
+                  <Typography
+                    component={Link}
+                    to={category.path}
+                    sx={{ fontSize: 13, textDecoration: "none" }}
+                  >
+                    {category.categoria}
+                  </Typography>
+                </Button>
+              ))}
             </Stack>
           </Box>
         </Toolbar>
@@ -67,7 +70,8 @@ const Navbar = () => {
         <AppBar
           position="fixed"
           elevation={0}
-          sx={{ bgcolor: "white", color: "black", px: 15 }}>
+          sx={{ bgcolor: "white", color: "black", px: 15 }}
+        >
           <SearchBar />
         </AppBar>
       </ScrollHide>

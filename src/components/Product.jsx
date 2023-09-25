@@ -8,13 +8,18 @@ const Product = () => {
   const { allProducts, deleteProduct, addCart, setOpen } = useProduct();
   const { isAdmin } = useAuth();
 
-  const [state, setState] = useState("");
-
   return (
     <>
       {allProducts.map((product) => (
-        <Grid item xs={12} sm={3} key={product._id}>
-          <Box sx={{ display: "flex", flexFlow: "column wrap", mr: 1 }}>
+        <Grid item xs={12} sm={4} xl={4} key={product._id}>
+          <Box
+            sx={{
+              display: "flex",
+              flexFlow: "column wrap",
+              alignItems: "center",
+              p: 1,
+            }}
+          >
             <Box sx={{ background: "#E3E9EF ", cursor: "pointer" }}>
               <img
                 className="img-hover"
@@ -25,6 +30,7 @@ const Product = () => {
             <Box textAlign="center" p>
               <Typography fontWeight="bold">{product.name}</Typography>
               <Typography fontWeight="bold">${product.price}</Typography>
+              <Typography fontWeight="bold">Genero: {product.genre}</Typography>
               <Rating defaultValue={4.5} precision={0.5} size="small" />
               {isAdmin ? <Typography>{product.amount}</Typography> : null}
             </Box>
@@ -36,7 +42,8 @@ const Product = () => {
                 <Button
                   onClick={() => {
                     deleteProduct(product._id);
-                  }}>
+                  }}
+                >
                   Delete
                 </Button>
               </Box>
@@ -44,7 +51,8 @@ const Product = () => {
               <Button
                 onClick={() => {
                   addCart(product), setOpen(true);
-                }}>
+                }}
+              >
                 Agregar Carrito
               </Button>
             )}

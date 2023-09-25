@@ -1,19 +1,12 @@
 import {
   Box,
-  Button,
-  Card,
-  CardContent,
   Divider,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import React from "react";
 import CardItems from "./CardItems";
 import {
-  BsCardChecklist,
-  BsCardHeading,
   BsCreditCard,
-  BsPaypal,
   BsPiggyBank,
   BsStopwatch,
   BsTruck,

@@ -12,10 +12,12 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // cambiar estos estados redundantes y ubicarlos es un solo state
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState([]);
+
 
   const signup = async (user) => {
     try {

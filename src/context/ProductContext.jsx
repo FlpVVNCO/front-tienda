@@ -4,6 +4,7 @@ import {
   deleteProductRequest,
   getProductRequest,
   getAllProductsRequest,
+  getProductsByGenre,
   getProductsRequest,
   updateProductRequest,
 } from "../api/product";
@@ -20,6 +21,10 @@ export const ProductsProvider = ({ children }) => {
   );
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
+  const [genre, setGenre] = useState([]);
+  const [filters, setFilters] = useState({
+    genre: [],
+  });
   const [open, setOpen] = useState(false);
   const [transitionName, setTransitionName] = useState("");
   const [imageSelected, setImageSelected] = useState("");
@@ -34,6 +39,18 @@ export const ProductsProvider = ({ children }) => {
     setAllProducts(res.data);
   };
 
+  const getProductGenre = async () => {
+    try {
+      const queryParams = new URLSearchParams(filters).toString();
+      console.log(queryParams);
+      const res = await getProductsByGenre(queryParams);
+      console.log(res);
+      setAllProducts(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const createProduct = async (data) => {
     try {
       const formData = new FormData();
@@ -41,10 +58,10 @@ export const ProductsProvider = ({ children }) => {
       formData.append("description", data.description);
       formData.append("price", data.price); // Convertir a número
       formData.append("amount", data.amount);
+      formData.append("genre", data.genre);
       formData.append("image", image);
 
       const res = await createProductRequest(formData);
-      console.log(res);
     } catch (error) {
       console.error(error);
     }
@@ -75,7 +92,6 @@ export const ProductsProvider = ({ children }) => {
   const getProduct = async (id) => {
     try {
       const res = await getProductRequest(id);
-      console.log(res.data);
       setProduct(res.data);
       return res.data;
     } catch (error) {
@@ -164,6 +180,7 @@ export const ProductsProvider = ({ children }) => {
         getProduct,
         updateProduct,
         getAllProducts,
+        getProductGenre,
         removeFromCart,
         addCart,
         setOpen,
@@ -171,7 +188,11 @@ export const ProductsProvider = ({ children }) => {
         createImage,
         setTransitionName,
         setImageSelected,
+        setGenre,
+        setFilters,
+        filters,
         open,
+        genre,
         product,
         allProducts,
         cart,
@@ -179,7 +200,8 @@ export const ProductsProvider = ({ children }) => {
         image,
         transitionName,
         imageSelected,
-      }}>
+      }}
+    >
       {children}
     </ProductsContext.Provider>
   );

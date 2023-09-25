@@ -20,6 +20,7 @@ const FormProduct = () => {
         setValue("price", product.price);
         setValue("amount", product.amount);
         setValue("description", product.description);
+        setValue("genre", product.genre);
       }
     };
     loadProduct();
@@ -43,7 +44,8 @@ const FormProduct = () => {
           justifyContent: "center",
           justifyItems: "center",
           alignItems: "center",
-        }}>
+        }}
+      >
         <TextField
           sx={{ mt: 2 }}
           type="text"
@@ -87,6 +89,15 @@ const FormProduct = () => {
           fullWidth
           placeholder="description"
           {...register("description")}
+        />
+        <TextField
+          sx={{ mt: 2 }}
+          size="small"
+          type="text"
+          name="genre"
+          fullWidth
+          placeholder="genre"
+          {...register("genre")}
         />
 
         <input

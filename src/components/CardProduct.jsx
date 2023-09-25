@@ -6,10 +6,15 @@ const CardProduct = () => {
 
   return (
     <Box
-      sx={{ display: "flex", flexFlow: "row wrap", justifyContent: "center" }}>
+      sx={{ display: "flex", flexFlow: "row wrap", justifyContent: "center" }}
+    >
       <Box>
         <img
-          src={`http://localhost:4000/api/${product.imageUrl}`}
+          src={
+            product.length === 0
+              ? ""
+              : `http://localhost:4000/api/${product?.imageUrl}`
+          }
           alt={`Producto ${product.name}`}
           style={{ viewTransitionName: transitionName }}
         />
@@ -21,7 +26,8 @@ const CardProduct = () => {
           fontSize={32}
           fontWeight={700}
           lineHeight={2}
-          textTransform="uppercase">
+          textTransform="uppercase"
+        >
           {product.name}
         </Typography>
 
@@ -41,7 +47,8 @@ const CardProduct = () => {
               },
             }}
             variant="outlined"
-            color="error">
+            color="error"
+          >
             S
           </Button>
           <Button
@@ -52,7 +59,8 @@ const CardProduct = () => {
               },
             }}
             variant="outlined"
-            color="error">
+            color="error"
+          >
             M
           </Button>
           <Button
@@ -63,7 +71,8 @@ const CardProduct = () => {
               },
             }}
             variant="outlined"
-            color="error">
+            color="error"
+          >
             L
           </Button>
           <Button
@@ -74,7 +83,8 @@ const CardProduct = () => {
               },
             }}
             variant="outlined"
-            color="error">
+            color="error"
+          >
             XL
           </Button>
         </Box>
@@ -86,7 +96,8 @@ const CardProduct = () => {
             borderRadius: 2,
             mt: 2,
             p: 1,
-          }}>
+          }}
+        >
           <Divider
             sx={{
               borderRightWidth: 5,
@@ -95,12 +106,14 @@ const CardProduct = () => {
             }}
             orientation="vertical"
           />
-          <Typography color="#14a741" fontSize={14}>
-            Disponible:{" "}
+          <Box>
+            <Typography color="#14a741" fontSize={14}>
+              Disponible:{" "}
+            </Typography>
             <Typography color="#000" fontSize={14}>
               {product.amount} unidades
             </Typography>
-          </Typography>
+          </Box>
         </Box>
 
         <Button
@@ -115,7 +128,8 @@ const CardProduct = () => {
               background: "red",
             },
             mt: 2,
-          }}>
+          }}
+        >
           Agregar al carro
         </Button>
       </Box>
