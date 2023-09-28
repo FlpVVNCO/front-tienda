@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useReducer } from "react";
 import {
   createProductRequest,
   deleteProductRequest,
@@ -9,16 +9,31 @@ import {
   updateProductRequest,
 } from "../api/product";
 import { createImageRequest, getImageRequest } from "../api/image";
+import { cartReducer, cartInitialState } from "../reducers/cart";
+
 export const ProductsContext = createContext();
+
+const useCartReducer = () => {
+  const [cartState, cartDispatch] = useReducer(cartReducer, cartInitialState);
+
+  const addToCart = (product) =>
+    cartDispatch({
+      type: "ADD_TO_CART",
+      payload: product,
+    });
+
+  const removeFromCart = (product) =>
+    cartDispatch({
+      type: "REMOVE_FROM_CART",
+      payload: product,
+    });
+
+  return { cartState, addToCart, removeFromCart };
+};
 
 export const ProductsProvider = ({ children }) => {
   const [product, setProduct] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [cart, setCart] = useState(
-    localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems"))
-      : []
-  );
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
   const [genre, setGenre] = useState([]);
@@ -29,10 +44,7 @@ export const ProductsProvider = ({ children }) => {
   const [transitionName, setTransitionName] = useState("");
   const [imageSelected, setImageSelected] = useState("");
 
-  // const getProducts = async () => {
-  //   const res = await getProductsRequest();
-  //   setProducts(res.data);
-  // };
+  const { cartState, addToCart, removeFromCart } = useCartReducer();
 
   const getAllProducts = async () => {
     const res = await getAllProductsRequest();
@@ -107,49 +119,6 @@ export const ProductsProvider = ({ children }) => {
     }
   };
 
-  const addCart = (product) => {
-    const existingItem = cart.find((item) => item._id === product._id);
-
-    if (existingItem) {
-      const updatedItems = cart.map((item) => {
-        if (item._id === product._id) {
-          return {
-            ...item,
-            quantity: item.quantity + 1,
-            total: (item.quantity + 1) * item.price,
-          };
-        }
-        return item;
-      });
-      setCart(updatedItems);
-    } else {
-      setCart([...cart, { ...product, quantity: 1, total: product.price }]);
-    }
-  };
-
-  const removeFromCart = (product) => {
-    const existingItem = cart.find((item) => item._id === product._id);
-
-    if (existingItem) {
-      if (existingItem.quantity === 1) {
-        const updatedItems = cart.filter((item) => item._id !== product._id);
-        setCart(updatedItems);
-      } else {
-        const updatedItems = cart.map((item) => {
-          if (item._id === product._id) {
-            return {
-              ...item,
-              quantity: item.quantity - 1,
-              total: (product.quantity - 1) * product.price,
-            };
-          }
-          return item;
-        });
-        setCart(updatedItems);
-      }
-    }
-  };
-
   const handleFileChange = (e) => {
     setImage(e.target.files[0]);
   };
@@ -164,8 +133,8 @@ export const ProductsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cart) ?? []);
-  }, [cart]);
+    localStorage.setItem("cartItems", JSON.stringify(cartState) ?? []);
+  }, [cartState]);
 
   useEffect(() => {
     getImages();
@@ -182,7 +151,7 @@ export const ProductsProvider = ({ children }) => {
         getAllProducts,
         getProductGenre,
         removeFromCart,
-        addCart,
+        addToCart,
         setOpen,
         handleFileChange,
         createImage,
@@ -195,7 +164,7 @@ export const ProductsProvider = ({ children }) => {
         genre,
         product,
         allProducts,
-        cart,
+        cart: cartState,
         images,
         image,
         transitionName,

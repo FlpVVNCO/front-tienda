@@ -13,12 +13,14 @@ import {
 } from "@mui/material";
 
 const CartItems = () => {
-  const { cart, removeFromCart, addCart } = useProduct();
+  const { cart, removeFromCart, addToCart } = useProduct();
 
   let cartTotal = cart.reduce(
     (acumulador, actual) => acumulador + actual.total,
     0
   );
+
+  console.log(cart);
 
   return (
     <List>
@@ -31,7 +33,7 @@ const CartItems = () => {
                 <Button onClick={() => removeFromCart(product)}>-</Button>
                 <Typography>{product.quantity}</Typography>
 
-                <Button onClick={() => addCart(product)}>+</Button>
+                <Button onClick={() => addToCart(product)}>+</Button>
               </CardActions>
               <Typography>${product.quantity * product.price}</Typography>
             </CardContent>

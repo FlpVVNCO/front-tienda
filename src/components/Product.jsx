@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Box, Typography, Rating, Button, Grid } from "@mui/material";
 
 const Product = () => {
-  const { allProducts, deleteProduct, addCart, setOpen } = useProduct();
+  const { allProducts, deleteProduct, addToCart, setOpen } = useProduct();
   const { isAdmin } = useAuth();
 
   return (
@@ -50,7 +50,7 @@ const Product = () => {
             ) : (
               <Button
                 onClick={() => {
-                  addCart(product), setOpen(true);
+                  addToCart(product), setOpen(true);
                 }}
               >
                 Agregar Carrito

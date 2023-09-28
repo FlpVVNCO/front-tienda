@@ -2,7 +2,7 @@ import { useProduct } from "../hooks/useProduct";
 import { Box, Typography, Button, Rating, Divider } from "@mui/material";
 
 const CardProduct = () => {
-  const { product, transitionName, addCart, setOpen } = useProduct();
+  const { product, transitionName, addToCart, setOpen } = useProduct();
 
   return (
     <Box
@@ -118,7 +118,7 @@ const CardProduct = () => {
 
         <Button
           onClick={() => {
-            addCart(product), setOpen(true);
+            addToCart(product), setOpen(true);
           }}
           variant="contained"
           sx={{
