@@ -4,10 +4,29 @@ import { Box, Typography, Button, Rating, Divider } from "@mui/material";
 const CardProduct = () => {
   const { product, transitionName, addToCart, setOpen } = useProduct();
 
+
+  const tallas = [
+    {
+      id: 1,
+      talla: "S",
+    },
+    {
+      id: 2,
+      talla: "M",
+    },
+    {
+      id: 3,
+      talla: "L",
+    },
+    {
+      id: 4,
+      talla: "XL",
+    },
+  ];
+
   return (
     <Box
-      sx={{ display: "flex", flexFlow: "row wrap", justifyContent: "center" }}
-    >
+      sx={{ display: "flex", flexFlow: "row wrap", justifyContent: "center" }}>
       <Box>
         <img
           src={
@@ -26,67 +45,35 @@ const CardProduct = () => {
           fontSize={32}
           fontWeight={700}
           lineHeight={2}
-          textTransform="uppercase"
-        >
+          textTransform="uppercase">
           {product.name}
         </Typography>
 
         <Rating defaultValue={4.5} precision={0.5} size="small" />
 
-        <Typography fontSize={28} fontWeight={500} color="red" lineHeight={2}>
+        <Typography
+          fontSize={28}
+          fontWeight={500}
+          color="secondary"
+          lineHeight={2}>
           ${product.price}
         </Typography>
 
         <Typography>Talla:</Typography>
         <Box sx={{ display: "flex", flexFlow: "row wrap", gap: 1 }}>
-          <Button
-            sx={{
-              "&:focus": {
-                background: "red",
-                color: "white",
-              },
-            }}
-            variant="outlined"
-            color="error"
-          >
-            S
-          </Button>
-          <Button
-            sx={{
-              "&:focus": {
-                background: "red",
-                color: "white",
-              },
-            }}
-            variant="outlined"
-            color="error"
-          >
-            M
-          </Button>
-          <Button
-            sx={{
-              "&:focus": {
-                background: "red",
-                color: "white",
-              },
-            }}
-            variant="outlined"
-            color="error"
-          >
-            L
-          </Button>
-          <Button
-            sx={{
-              "&:focus": {
-                background: "red",
-                color: "white",
-              },
-            }}
-            variant="outlined"
-            color="error"
-          >
-            XL
-          </Button>
+          {tallas.map((tallas) => (
+            <Button
+              sx={{
+                "&:focus": {
+                  bgcolor: "secondary.main",
+                  color: "white",
+                },
+              }}
+              variant="outlined"
+              color="secondary">
+              {tallas.talla}
+            </Button>
+          ))}
         </Box>
 
         <Box
@@ -96,8 +83,7 @@ const CardProduct = () => {
             borderRadius: 2,
             mt: 2,
             p: 1,
-          }}
-        >
+          }}>
           <Divider
             sx={{
               borderRightWidth: 5,
@@ -107,7 +93,7 @@ const CardProduct = () => {
             orientation="vertical"
           />
           <Box>
-            <Typography color="#14a741" fontSize={14}>
+            <Typography color="success.main" fontSize={14}>
               Disponible:{" "}
             </Typography>
             <Typography color="#000" fontSize={14}>
@@ -120,16 +106,8 @@ const CardProduct = () => {
           onClick={() => {
             addToCart(product), setOpen(true);
           }}
-          variant="contained"
-          sx={{
-            p: 2,
-            background: "red",
-            "&:hover": {
-              background: "red",
-            },
-            mt: 2,
-          }}
-        >
+          sx={{ bgcolor: "primary", p: 2, mt: 2 }}
+          variant="contained">
           Agregar al carro
         </Button>
       </Box>

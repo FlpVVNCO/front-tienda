@@ -32,12 +32,7 @@ const SearchBar = () => {
 
   return (
     <Toolbar>
-      <IconButton
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        sx={{ mr: 2 }}>
+      <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2 }}>
         <BsMenuApp />
       </IconButton>
 
@@ -59,6 +54,7 @@ const SearchBar = () => {
         <Autocomplete
           freeSolo
           disableClearable
+          color="primary"
           sx={{ width: "500px" }}
           options={searchProduct}
           renderInput={(params) => (

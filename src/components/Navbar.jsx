@@ -41,13 +41,16 @@ const Navbar = () => {
       <AppBar
         position="static"
         elevation={0}
-        sx={{ bgcolor: "white", color: "black", px: { xs: 0, sm: 5, xl: 20 } }}
-      >
+        sx={{
+          bgcolor: "background.default",
+          color: "black",
+          px: { xs: 0, sm: 5, xl: 20 },
+        }}>
         <SearchBar />
         {/* Categories */}
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography>Categorias</Typography>
+            <Typography color="primary">Categorias</Typography>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Stack direction="row">
@@ -56,8 +59,11 @@ const Navbar = () => {
                   <Typography
                     component={Link}
                     to={category.path}
-                    sx={{ fontSize: 13, textDecoration: "none" }}
-                  >
+                    sx={{
+                      fontSize: 13,
+                      textDecoration: "none",
+                      color: "primary.main",
+                    }}>
                     {category.categoria}
                   </Typography>
                 </Button>
@@ -70,8 +76,7 @@ const Navbar = () => {
         <AppBar
           position="fixed"
           elevation={0}
-          sx={{ bgcolor: "white", color: "black", px: 15 }}
-        >
+          sx={{ bgcolor: "background.default", color: "black", px: 15 }}>
           <SearchBar />
         </AppBar>
       </ScrollHide>

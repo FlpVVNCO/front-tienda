@@ -51,9 +51,8 @@ const Filters = () => {
           alignItems: "center",
           justifyContent: "space-between",
           p: 2,
-        }}
-      >
-        <Typography variant="h1" fontSize={22}>
+        }}>
+        <Typography color="primary" variant="h1" fontSize={22}>
           Filtros
         </Typography>
 
@@ -73,10 +72,9 @@ const Filters = () => {
             gap: 1,
             mb: 2,
             p: 2,
-          }}
-        >
+          }}>
           <FormControl>
-            <FormLabel color="success">Género</FormLabel>
+            <FormLabel color="primary">Género</FormLabel>
 
             <FormControlLabel
               control={
@@ -112,7 +110,7 @@ const Filters = () => {
               }
               label="Niño"
             />
-            <FormLabel color="success" id="demo-radio-buttons-group-label">
+            <FormLabel color="primary" id="demo-radio-buttons-group-label">
               Color
             </FormLabel>
           </FormControl>

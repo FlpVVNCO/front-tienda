@@ -18,8 +18,7 @@ const Product = () => {
               flexFlow: "column wrap",
               alignItems: "center",
               p: 1,
-            }}
-          >
+            }}>
             <Box sx={{ background: "#E3E9EF ", cursor: "pointer" }}>
               <img
                 className="img-hover"
@@ -42,17 +41,17 @@ const Product = () => {
                 <Button
                   onClick={() => {
                     deleteProduct(product._id);
-                  }}
-                >
+                  }}>
                   Delete
                 </Button>
               </Box>
             ) : (
               <Button
+                variant="contained"
+                sx={{ p: 1.5 }}
                 onClick={() => {
                   addToCart(product), setOpen(true);
-                }}
-              >
+                }}>
                 Agregar Carrito
               </Button>
             )}
